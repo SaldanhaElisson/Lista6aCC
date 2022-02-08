@@ -5,6 +5,15 @@ times = []
 partidas = []
 quantidadeDeTimes = int(input('Digite a quantidade Total de times: '))
 
+def inverterLista(lista):
+    listInvertida = []
+    idx = len(lista) - 1
+    while (idx >= 0 ):
+        listInvertida.append(lista[idx])
+        idx = idx - 1
+
+    return listInvertida
+
 ## Para saber a quantidade total de jogos iremos fazer uma combinação com o total de times
 ## agrupando de 2 em 2
 ## formula de combinação: N!/P!(N-P)!
@@ -16,11 +25,20 @@ for n in range (0, quantidadeDeTimes):
 
 
 ## verificando se a sublista já existe dentro da lista
-def verificar(jogos):
-    partidaUnica = []
-    partidaUnica.append(jogos.pop())
-    if  partidaUnica in jogos:
-        print(f'{partidaUnica}')
+def verificarSeExistJogos(jogos):
+    timeInvertido = inverterLista(jogos)
+    # print(timeInvertido)
+    if  jogos in partidas:
+        # print('achei aqui')
+        # print(jogos)
+        # print(partidas)
+        return True
+    elif timeInvertido in partidas:
+        print(timeInvertido)
+        print(partidas)
+        print('achei')
+        return True
+    return False
         
 
 ## nesse caso estou declarando todos os possivei  jogos
@@ -31,10 +49,14 @@ while len(partidas) < quantidadeDeJogos:
     if time1 == time2:
         continue
 
-   
+    
+    jogos = [time1, time2]
+    if verificarSeExistJogos(jogos):
+        continue
+    partidas.append(jogos)
 
-    partidas.append([time1, time2])
-    verificar(partidas)
+
+print(partidas)
 
 ## Agora irei verificar se aquela partida já aconteceu ou não
 # for n in range(0, len(partidas)):
@@ -51,4 +73,17 @@ while len(partidas) < quantidadeDeJogos:
     ## depois irá verificar a variavel, se ocorreu vai:
         ### 
 
+
+### função verificar
+    # vou receber a lista que quero verificar (jogos)
+    # Vou criar uma variavel com lista vazia (PartidaAtual)
+    # vou adicionar o ultimo item da lista enviada para essa lista vazial
+    #vou inverter esse lista
+    # vou verificar se a lista já existe dentro do array 
+        # se sim, retorna um false
+    # se não passar para proxima linha
+    #vou inveter dnv a lista partidaAtual
+    # vou verificar se a lista já exite dentro do array
+        # se sim, retorna um false
+    # se não, retorna um True
 
