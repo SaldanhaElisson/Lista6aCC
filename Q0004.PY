@@ -7,7 +7,6 @@ partidas = []
 quantidadeDeTimes = int(input('Digite a quantidade Total de times: '))
 tabela = [['TIMES', 'PG', 'GM', 'GS', 'S', 'V', 'GA']]
 
-
 def achandoValorNoarrayEAdicionandoMaisUM(array, time, valor, atributo):
     posisitonOfAtributte = 0
 
@@ -30,12 +29,15 @@ def inverterLista(lista):
 
     return listInvertida
 
+
+## criando uma sublista
 def dadoDoTime(nome, pg, gm, cs, s, v, ga):
   dadosDostimes = [nome, pg, gm, cs, s, v, ga]
   return dadosDostimes
 
-def tabelaDeJogos():
 
+## printando a tabela no terminal
+def tabelaDeJogos():
     linhas = len(tabela) 
     colunas = len(tabela[0]) 
     for l in range(0, linhas):
@@ -69,22 +71,24 @@ def verificarSeExistJogos(jogos):
         return True
     return False
         
-
+# Identificando qual time ganhou
 def qualTimeGanhou(time):
-    PG = '-'
-    print(time[3])
     if time[2] > time[3]:
-               achandoValorNoarrayEAdicionandoMaisUM(tabela, time[0], 2, 'PG')
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, time[0], 2, 'PG')
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, time[0], 1, 'V')
+
     elif time[2] == time[3]:
         achandoValorNoarrayEAdicionandoMaisUM(tabela, time[0], 1, 'PG')
         achandoValorNoarrayEAdicionandoMaisUM(tabela, time[1], 1, 'PG')
 
     elif time[2] < time[3]:
         achandoValorNoarrayEAdicionandoMaisUM(tabela, time[1], 2, 'PG')
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, time[1], 1, 'V')
+
 
 
     
-## nesse caso estou declarando todos os possivei  jogos
+# estou declarando todos os possivei  jogos
 while len(partidas) < quantidadeDeJogos:
     time1 = times[random.randint(0, quantidadeDeTimes - 1)]
     time2 = times[random.randint(0, quantidadeDeTimes - 1)]
@@ -99,39 +103,99 @@ while len(partidas) < quantidadeDeJogos:
     partidas.append(jogos)
 
 
-for n in partidas:
-    yesOrNot = input(f'A partida {n[0]} x {n[1]} já ocorreu? [S/N]')
-    partida = []
-    if yesOrNot == 'S':
+for partida in partidas:
+    yesOrNot = input(f'A partida {partida[0]} x {partida[1]} já ocorreu? [S/N]')
+    if yesOrNot == 'S' or yesOrNot == 's' or yesOrNot == 'sim':
         # colocar o placa dentro da lista
-        golsDoPrimeiroTime = int(input(f'Dgitite a quantidade de gols dessa partida do time {n[0]} : '))
-        golsDoSegundoTime = int(input(f'Dgitite a quantidade de gols dessa partida do time {n[1]} : '))
+        golsDoPrimeiroTime = int(input(f'Dgitite a quantidade de gols dessa partida do time {partida[0]} : '))
+        golsDoSegundoTime = int(input(f'Dgitite a quantidade de gols dessa partida do time {partida[1]} : '))
 
-        n.append(golsDoPrimeiroTime)
-        n.append(golsDoSegundoTime)
-
-        
-
-
+        partida.append(golsDoPrimeiroTime)
+        partida.append(golsDoSegundoTime)
         # Colocando a quantidade de gols marcados
-        achandoValorNoarrayEAdicionandoMaisUM(tabela, n[0], golsDoPrimeiroTime, 'GM')
-        achandoValorNoarrayEAdicionandoMaisUM(tabela, n[1], golsDoSegundoTime, 'GM')
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, partida[0], golsDoPrimeiroTime, 'GM')
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, partida[1], golsDoSegundoTime, 'GM')
 
         # Colocando a quantidade de gols sofrindos
-        achandoValorNoarrayEAdicionandoMaisUM(tabela, n[0], golsDoSegundoTime, 'GS')
-        achandoValorNoarrayEAdicionandoMaisUM(tabela, n[1], golsDoPrimeiroTime, 'GS')
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, partida[0], golsDoSegundoTime, 'GS')
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, partida[1], golsDoPrimeiroTime, 'GS')
 
-        print(times)
         # Colocando o número de pontos ganhos
-        qualTimeGanhou(n)
+        qualTimeGanhou(partida)
+
+        #Calculando o saldo de gols do Primeiro Time
+        saldosDeGolsPrimeiroTime = golsDoPrimeiroTime - golsDoSegundoTime
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, partida[1], saldosDeGolsPrimeiroTime, 'S')
 
 
-print(tabela)
-    
+        #Calculando o saldo de gols do Segundo Time
+        saldosDeGolsPrimeiroTime = golsDoSegundoTime - golsDoPrimeiroTime 
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, partida[2], saldosDeGolsPrimeiroTime, 'S')
 
+
+def adicionandoGA():
+    for l in range (1, len(tabela)):
+        GS = tabela[l][3]
+        GM =  tabela[l][2]
+        time = tabela[l][0]
+        if GS == 0:
+            GS = 1
+        GA = GM / GS
+        GA_formatado = "{:.2f}".format(GA)
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, time, float(GA_formatado), 'GA')
+
+adicionandoGA()
+print()
+print('ITEM A ')
+print()
 tabelaDeJogos()
+print()
+print('=' * 100)
+print('item B')
+print()
 
 
 
+###########################################################################################################################################################################
+#QUESTÃO B
+# QUANTO O SORT É USADO PARA UMA SUBLISTA ELE ORDENA PELA PRIEMIRA ARRAY DENTRO DA SUBTLISTA, E SE FOR IGUAL ELE VAI PARA O SEGUNDO ARRAY DA SUBLISTA E ASSIM POR DIANTE
+# ESTOU COLOCANDO EM ORDEM DE PESOS, A COLUNA COM MAIS PESO VAI PARA O PRIEMRIO, A SEGUNDO COM MAIS PESO  PARA SEGUNDA ARRAY E ASSIM POR DIANTE
+# E DEPOIS EU FAÇOR UM SORT REVERSE
+# DEPOIS DESTROCO AS COLUNAS E MOSTRO NA TELA A TABELA ORDENADA
 
+
+def ordenandoListDeAcordoComPG(tabela):
+    linhas = len(tabela)       
+    ## Trocando de coluna do PF e TIMES para orderna a lista
+    for l in range(0, linhas):
+        variaAux = tabela[l][0]
+        tabela[l][0]  = tabela[l][1]
+        tabela[l][1] =  variaAux
+  
+    ## Trocando Coluna de S por times
+    for l in range(0, linhas):
+        variaAux = tabela[l][3]
+        tabela[l][3]  = tabela[l][1]
+        tabela[l][1] =  variaAux
+
+    ## ordenando lista
+    primeiaLinha = tabela.pop(0)
+    tabela.sort(reverse = True)
+    tabela.insert(0, primeiaLinha)
+
+     # Desctrocando de S por Times
+    for l in range(0, linhas):
+        variaAux = tabela[l][3]
+        tabela[l][3]  = tabela[l][1]
+        tabela[l][1] =  variaAux
+
+    #Destrocando do PG e TImes
+    for l in range(0, linhas):
+        variaAux = tabela[l][0]
+        tabela[l][0]  = tabela[l][1]
+        tabela[l][1] =  variaAux
+
+   
+ordenandoListDeAcordoComPG(tabela)
+tabelaDeJogos()
 

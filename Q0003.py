@@ -1,8 +1,4 @@
 
-
-from locale import MON_1, MON_11
-
-
 matriz = [[ 0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
 print('Posições dos numeros')
@@ -19,7 +15,6 @@ for l in range(0, 3):
         pessoas +=1
         matriz[l][c] = int(input(f'Digite o numero da posição [{l}, {c}]: '))
 print('-='*30)
-
 
 # Verificando se pe um quadrado magico
 
@@ -46,8 +41,19 @@ for m in rangeFor:
     primeiraConluna += matriz[m][0]
     segundaConluna += matriz[m][1]
     terceiraCOnluna += matriz[m][2]
-
-
     primeiraDiagonal += matriz[m][m]
     segundaLinhaDiagonal += matriz[m][gambiarra[m]]
 
+def verificandoSeEQuadradoPerfeito():
+    valorQueEPraSer = primeiraLinha * 8
+    valorQueE = primeiraConluna + segundaConluna + primeiraDiagonal + terceiraCOnluna
+    valorQueE = valorQueE + primeiraLinha + segundaLinha + terceiraLinha
+    valorQueE = valorQueE + segundaLinhaDiagonal 
+    
+    if valorQueEPraSer == valorQueE:
+        return True
+        
+if verificandoSeEQuadradoPerfeito() == True:
+    print('È um quadrado perfeito')
+else:
+    print('Não é um quadrado perfeito')
