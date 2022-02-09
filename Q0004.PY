@@ -1,10 +1,26 @@
 import math
 import random
+from time import time
 
 times = []
 partidas = []
 quantidadeDeTimes = int(input('Digite a quantidade Total de times: '))
+tabela = [['TIMES', 'PG', 'GM', 'GS', 'S', 'V', 'GA']]
 
+
+def achandoValorNoarrayEAdicionandoMaisUM(array, time, valor, atributo):
+    posisitonOfAtributte = 0
+
+    for qualE in array[0]:
+        for position in range(0, len(array[0])):
+            if atributo == array[0][position]:
+                posisitonOfAtributte = position
+                
+    for l in array:
+        if l[0] == time:
+            l[posisitonOfAtributte] = l[posisitonOfAtributte] + valor
+    return array
+# Inverter os valores da lista
 def inverterLista(lista):
     listInvertida = []
     idx = len(lista) - 1
@@ -14,14 +30,33 @@ def inverterLista(lista):
 
     return listInvertida
 
+def dadoDoTime(nome, pg, gm, cs, s, v, ga):
+  dadosDostimes = [nome, pg, gm, cs, s, v, ga]
+  return dadosDostimes
+
+def tabelaDeJogos():
+
+    linhas = len(tabela) 
+    colunas = len(tabela[0]) 
+    for l in range(0, linhas):
+        for c in range(0, colunas):
+            print(f'[{tabela[l][c]:^13}]', end='')
+        print()
+
 ## Para saber a quantidade total de jogos iremos fazer uma combinação com o total de times
 ## agrupando de 2 em 2
 ## formula de combinação: N!/P!(N-P)!
 quantidadeDeJogos = int((math.factorial(quantidadeDeTimes))/(math.factorial(2) * math.factorial(quantidadeDeTimes - 2)))
 
+lista = 0
 ## aqui estou adicionando os nomes dos times de acorda com a quantidade
 for n in range (0, quantidadeDeTimes):
     times.append(input(f'Digite o nome do {n+1}° time: '))
+
+for n in times:
+    lista = dadoDoTime(n, 0, 0, 0, 0, 0, 0)
+    tabela.append(lista)
+    
 
 
 ## verificando se a sublista já existe dentro da lista
@@ -29,18 +64,26 @@ def verificarSeExistJogos(jogos):
     timeInvertido = inverterLista(jogos)
     # print(timeInvertido)
     if  jogos in partidas:
-        # print('achei aqui')
-        # print(jogos)
-        # print(partidas)
         return True
     elif timeInvertido in partidas:
-        print(timeInvertido)
-        print(partidas)
-        print('achei')
         return True
     return False
         
 
+def qualTimeGanhou(time):
+    PG = '-'
+    print(time[3])
+    if time[2] > time[3]:
+               achandoValorNoarrayEAdicionandoMaisUM(tabela, time[0], 2, 'PG')
+    elif time[2] == time[3]:
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, time[0], 1, 'PG')
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, time[1], 1, 'PG')
+
+    elif time[2] < time[3]:
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, time[1], 2, 'PG')
+
+
+    
 ## nesse caso estou declarando todos os possivei  jogos
 while len(partidas) < quantidadeDeJogos:
     time1 = times[random.randint(0, quantidadeDeTimes - 1)]
@@ -56,34 +99,39 @@ while len(partidas) < quantidadeDeJogos:
     partidas.append(jogos)
 
 
-print(partidas)
+for n in partidas:
+    yesOrNot = input(f'A partida {n[0]} x {n[1]} já ocorreu? [S/N]')
+    partida = []
+    if yesOrNot == 'S':
+        # colocar o placa dentro da lista
+        golsDoPrimeiroTime = int(input(f'Dgitite a quantidade de gols dessa partida do time {n[0]} : '))
+        golsDoSegundoTime = int(input(f'Dgitite a quantidade de gols dessa partida do time {n[1]} : '))
 
-## Agora irei verificar se aquela partida já aconteceu ou não
-# for n in range(0, len(partidas)):
-#     for a in range(0, 2):
-#         yesOrNot = input()
+        n.append(golsDoPrimeiroTime)
+        n.append(golsDoSegundoTime)
 
-## vou digitar a quantiade times
-## depois vou calcular a quantidade de partidas por meio de combinação
-## depois vou  colocar  as partidas como por exemplo: time1 x time2
-    ## não pode ser time1 x time1
-    ## não pode ter time1 x time2 e time2 x time1
-## depois verificar se aquele jogo ocorreu com o usuario
-    ## uma variavel vai  perguntar se  o jogo a x b, ocorreu e ira receber s ou n
-    ## depois irá verificar a variavel, se ocorreu vai:
-        ### 
+        
 
 
-### função verificar
-    # vou receber a lista que quero verificar (jogos)
-    # Vou criar uma variavel com lista vazia (PartidaAtual)
-    # vou adicionar o ultimo item da lista enviada para essa lista vazial
-    #vou inverter esse lista
-    # vou verificar se a lista já existe dentro do array 
-        # se sim, retorna um false
-    # se não passar para proxima linha
-    #vou inveter dnv a lista partidaAtual
-    # vou verificar se a lista já exite dentro do array
-        # se sim, retorna um false
-    # se não, retorna um True
+        # Colocando a quantidade de gols marcados
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, n[0], golsDoPrimeiroTime, 'GM')
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, n[1], golsDoSegundoTime, 'GM')
+
+        # Colocando a quantidade de gols sofrindos
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, n[0], golsDoSegundoTime, 'GS')
+        achandoValorNoarrayEAdicionandoMaisUM(tabela, n[1], golsDoPrimeiroTime, 'GS')
+
+        print(times)
+        # Colocando o número de pontos ganhos
+        qualTimeGanhou(n)
+
+
+print(tabela)
+    
+
+tabelaDeJogos()
+
+
+
+
 
