@@ -29,12 +29,10 @@ def inverterLista(lista):
 
     return listInvertida
 
-
 ## criando uma sublista
 def dadoDoTime(nome, pg, gm, cs, s, v, ga):
   dadosDostimes = [nome, pg, gm, cs, s, v, ga]
   return dadosDostimes
-
 
 ## printando a tabela no terminal
 def tabelaDeJogos():
@@ -84,9 +82,6 @@ def qualTimeGanhou(time):
     elif time[2] < time[3]:
         achandoValorNoarrayEAdicionandoMaisUM(tabela, time[1], 2, 'PG')
         achandoValorNoarrayEAdicionandoMaisUM(tabela, time[1], 1, 'V')
-
-
-
     
 # estou declarando todos os possivei  jogos
 while len(partidas) < quantidadeDeJogos:
@@ -101,7 +96,6 @@ while len(partidas) < quantidadeDeJogos:
     if verificarSeExistJogos(jogos):
         continue
     partidas.append(jogos)
-
 
 for partida in partidas:
     yesOrNot = input(f'A partida {partida[0]} x {partida[1]} já ocorreu? [S/N]')
@@ -154,15 +148,12 @@ print('=' * 100)
 print('item B')
 print()
 
-
-
 ###########################################################################################################################################################################
 #QUESTÃO B
 # QUANTO O SORT É USADO PARA UMA SUBLISTA ELE ORDENA PELA PRIEMIRA ARRAY DENTRO DA SUBTLISTA, E SE FOR IGUAL ELE VAI PARA O SEGUNDO ARRAY DA SUBLISTA E ASSIM POR DIANTE
 # ESTOU COLOCANDO EM ORDEM DE PESOS, A COLUNA COM MAIS PESO VAI PARA O PRIEMRIO, A SEGUNDO COM MAIS PESO  PARA SEGUNDA ARRAY E ASSIM POR DIANTE
 # E DEPOIS EU FAÇOR UM SORT REVERSE
 # DEPOIS DESTROCO AS COLUNAS E MOSTRO NA TELA A TABELA ORDENADA
-
 
 def ordenandoListDeAcordoComPG(tabela):
     linhas = len(tabela)       
@@ -195,7 +186,6 @@ def ordenandoListDeAcordoComPG(tabela):
         tabela[l][0]  = tabela[l][1]
         tabela[l][1] =  variaAux
 
-   
 ordenandoListDeAcordoComPG(tabela)
 tabelaDeJogos()
 
