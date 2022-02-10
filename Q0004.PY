@@ -2,11 +2,14 @@ import math
 import random
 from time import time
 
+
 times = []
 partidas = []
 quantidadeDeTimes = int(input('Digite a quantidade Total de times: '))
 tabela = [['TIMES', 'PG', 'GM', 'GS', 'S', 'V', 'GA']]
 
+
+#Adicionar um valor na tabela e acordo com a coluna
 def achandoValorNoarrayEAdicionandoMaisUM(array, time, valor, atributo):
     posisitonOfAtributte = 0
 
@@ -19,6 +22,7 @@ def achandoValorNoarrayEAdicionandoMaisUM(array, time, valor, atributo):
         if l[0] == time:
             l[posisitonOfAtributte] = l[posisitonOfAtributte] + valor
     return array
+
 # Inverter os valores da lista
 def inverterLista(lista):
     listInvertida = []
@@ -48,16 +52,26 @@ def tabelaDeJogos():
 ## formula de combinação: N!/P!(N-P)!
 quantidadeDeJogos = int((math.factorial(quantidadeDeTimes))/(math.factorial(2) * math.factorial(quantidadeDeTimes - 2)))
 
+# Variavel auxiliar para criar a tabela
 lista = 0
+
 ## aqui estou adicionando os nomes dos times de acorda com a quantidade
-for n in range (0, quantidadeDeTimes):
-    times.append(input(f'Digite o nome do {n+1}° time: '))
+def adicionandoOsTimes():
+    for n in range (0, quantidadeDeTimes):
+        times.append(input(f'Digite o nome do {n+1}° time: '))
+
+# Verificando se foi colocado todos os times
+adicionandoOsTimes()
+while "" in times:
+        print(' A Quantidades de times precisa ser igual ao declarado posteriomente')
+        print()
+        times = []
+        adicionandoOsTimes()
+
 
 for n in times:
     lista = dadoDoTime(n, 0, 0, 0, 0, 0, 0)
-    tabela.append(lista)
-    
-
+    tabela.append(lista) 
 
 ## verificando se a sublista já existe dentro da lista
 def verificarSeExistJogos(jogos):
@@ -85,18 +99,24 @@ def qualTimeGanhou(time):
     
 # estou declarando todos os possivei  jogos
 while len(partidas) < quantidadeDeJogos:
+    # Estou pegando dois times randomicamente de acordo com os times obtidos pelo usario  
     time1 = times[random.randint(0, quantidadeDeTimes - 1)]
     time2 = times[random.randint(0, quantidadeDeTimes - 1)]
+    jogos = [time1, time2]
 
+    #=======================================
+    # Nesse trecho está fazendo a validação dos dois times, para compô uma partida e não ter partidas invalidas
+    # como por exemplo, TIME1 x TIME1 ou ter TIM1 X TIME2, mas já ter TIME2 X TIME1  no array dos jogos oficiais
     if time1 == time2:
         continue
-
-    
-    jogos = [time1, time2]
     if verificarSeExistJogos(jogos):
         continue
+     #======================================  
+
+    # Se tudo estiver ok, ele vai adicioar a sublista jogos na list partidas que contém os jogos oficiais
     partidas.append(jogos)
 
+#Adicionando as pontuações na tabela
 for partida in partidas:
     yesOrNot = input(f'A partida {partida[0]} x {partida[1]} já ocorreu? [S/N]')
     if yesOrNot == 'S' or yesOrNot == 's' or yesOrNot == 'sim':
@@ -126,7 +146,7 @@ for partida in partidas:
         saldosDeGolsPrimeiroTime = golsDoSegundoTime - golsDoPrimeiroTime 
         achandoValorNoarrayEAdicionandoMaisUM(tabela, partida[2], saldosDeGolsPrimeiroTime, 'S')
 
-
+# Essa função estou adicionando o GA n a tabela
 def adicionandoGA():
     for l in range (1, len(tabela)):
         GS = tabela[l][3]
@@ -138,6 +158,8 @@ def adicionandoGA():
         GA_formatado = "{:.2f}".format(GA)
         achandoValorNoarrayEAdicionandoMaisUM(tabela, time, float(GA_formatado), 'GA')
 
+
+# Formatação
 adicionandoGA()
 print()
 print('ITEM A ')
@@ -157,7 +179,7 @@ print()
 
 def ordenandoListDeAcordoComPG(tabela):
     linhas = len(tabela)       
-    ## Trocando de coluna do PF e TIMES para orderna a lista
+    ## Trocando de coluna do Pg e TIMES para orderna a lista
     for l in range(0, linhas):
         variaAux = tabela[l][0]
         tabela[l][0]  = tabela[l][1]
