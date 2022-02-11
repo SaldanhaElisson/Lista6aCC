@@ -9,18 +9,17 @@ for l in range(0, 3):
             continue
 
         matriz[l][c] = input(f'{matriz[l][0]} do {pessoas}° cliente: ')
-print('-='*30)
+
 
 def imprimirTabela():
     for l in range(0, 3):
         for c in range(0, 4):
             print(f'[{matriz[l][c]:^15}]', end='')
         print()
-
+print('='*80)
 imprimirTabela()
 
 def achandoValorNoarrayEAdicionandoMaisUM(array, nome, valor, numero):
-    print("elisson")
     posisitonOfAtributte = 0
     aux = len(array)
     for qualE in range(0, aux):
@@ -29,28 +28,33 @@ def achandoValorNoarrayEAdicionandoMaisUM(array, nome, valor, numero):
                 
     for l in range(0, aux):
         if array[1][l] == nome:
-            print(array[1][posisitonOfAtributte])
-            array[1][posisitonOfAtributte] = array[1][posisitonOfAtributte] + valor
+            array[2][posisitonOfAtributte] = float(array[2][posisitonOfAtributte]) + float(valor)
     return array
 
 def transacao(nome, numero):
     depositarOrSacar = int(input('Digite [1] para depositar ou [0] Sacar: '))
     if depositarOrSacar == 1:
-        valor = int(input('Digite o valor para depositar: '))
+        valor = float(input('Digite o valor para depositar: '))
         achandoValorNoarrayEAdicionandoMaisUM(matriz, nome, valor, numero)
+    elif depositarOrSacar == 0:
+        valor = float(input('Digite o valor para sacar: '))
+        achandoValorNoarrayEAdicionandoMaisUM(matriz, nome, -valor, numero)
 
 
 def telaDeInicio():
-    print('=' * 100)
-    print(' CONTA DO CC')
+    print('=' * 80)
     print()
-    print(' Para entrar na conta colocaque o numero do usuario e a senha')
+    print('BANCO DO CC')
     print()
+    print('PARA FAZER A TRANSAÇÃO COLOQUE O NOME DO CLIENTE E SEU NUMERO DA CONTA')
+    print()
+    print("="*80)
     login()
 
 def login():
     numeroDaConta  = int(input('Digite o numero da conta: '))
     nomeDoUsuario = input('Digite o nome do usuario: ')
+    print()
 
     for c in range(1, 4):
         if matriz[0][c] == numeroDaConta:
@@ -61,4 +65,5 @@ def login():
     
 
 telaDeInicio()
+print
 imprimirTabela()

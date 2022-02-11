@@ -6,9 +6,10 @@ for l in range(1, 5):
     for c in range(0, 4):
         if matriz[0][c] == "salario":
             matriz[l][c] = float(input(f'{matriz[0][c]} do {pessoas}° funcionario: '))
+            print()
             continue
         matriz[l][c] = input(f'{matriz[0][c]} do {pessoas}° funcionario: ')
-print('-='*30)
+print('='*50)
 
 for l in range(0, 5):
     for c in range(0, 4):
